@@ -8,7 +8,7 @@
     "dev": "concurrently -n \"BACKEND,CLIENT\" -c \"magenta,cyan\" \"npm run dev:backend\" \"npm run dev:client\"",
     "dev:backend": "nodemon server.js",
     "dev:client": "npm --prefix client run dev",
-    "build": "npm --prefix client install && npm --prefix client run build",
+    "build": "npm --prefix client install --include=dev && npm --prefix client run build",
     "seed": "node scripts/seedUsers.js",
     "make-admin": "node scripts/create-admin.js",
     "client": "npm --prefix client run dev",

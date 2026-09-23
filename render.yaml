@@ -4,7 +4,7 @@ services:
     runtime: node
     plan: free
     region: singapore # Low-latency region for Gujarat / India users
-    buildCommand: npm install && npm --prefix client install && npm --prefix client run build
+    buildCommand: npm install && npm --prefix client install --include=dev && npm --prefix client run build
     startCommand: npm start
     healthCheckPath: /api/health
     autoDeploy: true
