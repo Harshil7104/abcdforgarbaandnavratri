@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: find-my-garba-partner-api
+    runtime: node
+    plan: free
+    region: singapore # Low-latency region for Gujarat / India users
+    buildCommand: npm install && npm --prefix client install && npm --prefix client run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: MONGO_URI
+        sync: false # Set securely in Render Dashboard (MongoDB Atlas connection string)
+      - key: JWT_SECRET
+        generateValue: true # Generates a secure random 32-character secret automatically
+      - key: CLIENT_URL
+        value: https://findmygarbapartner.com
+      - key: DISABLE_KEEP_ALIVE
+        value: "false"

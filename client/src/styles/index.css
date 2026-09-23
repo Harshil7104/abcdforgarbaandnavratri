@@ -1,0 +1,419 @@
+:root {
+  --bg-midnight: #0d0714;
+  --bg-indigo: #1a0e2e;
+  --bg-card: rgba(26, 14, 46, 0.75);
+  --bg-card-hover: rgba(35, 18, 62, 0.85);
+  --accent-terracotta: #d9381e;
+  --accent-marigold: #ff9933;
+  --accent-gold: #e6a100;
+  --accent-gold-light: #ffd54f;
+  --accent-magenta: #c2185b;
+  --accent-emerald: #10b981;
+  --text-main: #ffffff;
+  --text-muted: #d1c4e9;
+  --text-gold: #fde047;
+  --border-gold: rgba(230, 161, 0, 0.3);
+  --border-gold-strong: rgba(230, 161, 0, 0.8);
+  --shadow-gold: 0 0 25px rgba(230, 161, 0, 0.25);
+  --font-heading: 'Cinzel', serif;
+  --font-body: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-festive: 'Rozha One', serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-midnight);
+  color: var(--text-main);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+  line-height: 1.6;
+}
+
+/* Authentic Gujarati Navratri Background with Mandalas and Bandhani dots */
+.navratri-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 10% 20%, rgba(217, 56, 30, 0.15) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(255, 153, 51, 0.12) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(26, 14, 46, 0.95) 0%, #0d0714 100%);
+  z-index: -2;
+}
+
+.bandhani-pattern {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: radial-gradient(rgba(230, 161, 0, 0.08) 1.5px, transparent 1.5px),
+                    radial-gradient(rgba(217, 56, 30, 0.08) 1.5px, transparent 1.5px);
+  background-size: 32px 32px;
+  background-position: 0 0, 16px 16px;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Toran Header Garland Motif */
+.toran-container {
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  background: linear-gradient(90deg, #d9381e, #ff9933, #e6a100, #ff9933, #d9381e);
+  height: 6px;
+  box-shadow: 0 2px 10px rgba(255, 153, 51, 0.5);
+}
+
+.toran-svg-strip {
+  width: 100%;
+  height: 28px;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  top: -1px;
+}
+
+/* Glassmorphism Cards */
+.glass-panel {
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-gold);
+  border-radius: 20px;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.45), var(--shadow-gold);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-panel-interactive:hover {
+  border-color: var(--border-gold-strong);
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.6), 0 0 35px rgba(230, 161, 0, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Buttons */
+.btn-festive-gold {
+  background: linear-gradient(135deg, #ffd54f 0%, #ff9933 50%, #d9381e 100%);
+  color: #0d0714;
+  font-weight: 700;
+  font-size: 1.05rem;
+  padding: 14px 28px;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(255, 153, 51, 0.45);
+  transition: all 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-decoration: none;
+  font-family: var(--font-body);
+}
+
+.btn-festive-gold:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 28px rgba(255, 153, 51, 0.65);
+  background: linear-gradient(135deg, #ffe082 0%, #ffa726 50%, #e53935 100%);
+}
+
+.btn-festive-gold:active {
+  transform: scale(0.98);
+}
+
+.btn-outline-gold {
+  background: rgba(230, 161, 0, 0.08);
+  color: #ffd54f;
+  border: 1.5px solid var(--accent-gold);
+  padding: 12px 24px;
+  border-radius: 9999px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-outline-gold:hover {
+  background: rgba(230, 161, 0, 0.2);
+  border-color: #ffd54f;
+  transform: translateY(-1px);
+}
+
+.btn-whatsapp {
+  background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+  color: #ffffff;
+  font-weight: 700;
+  padding: 14px 24px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.35);
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.btn-whatsapp:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5);
+}
+
+/* Step Wizard Navigation Indicator */
+.step-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.step-bubble {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.95rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  color: var(--text-muted);
+  transition: all 0.3s ease;
+}
+
+.step-bubble.active {
+  background: linear-gradient(135deg, var(--accent-marigold), var(--accent-terracotta));
+  border-color: var(--accent-gold);
+  color: #ffffff;
+  box-shadow: 0 0 15px rgba(255, 153, 51, 0.6);
+  transform: scale(1.1);
+}
+
+.step-bubble.completed {
+  background: var(--accent-gold);
+  border-color: var(--accent-gold-light);
+  color: #0d0714;
+}
+
+.step-line {
+  height: 3px;
+  width: 40px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.step-line.completed {
+  background: linear-gradient(90deg, var(--accent-gold), var(--accent-marigold));
+}
+
+/* Inputs & Form Styling */
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.form-label span.req {
+  color: #ff5252;
+  margin-left: 3px;
+}
+
+.form-input,
+.form-select {
+  width: 100%;
+  background: rgba(13, 7, 20, 0.85);
+  border: 1.5px solid rgba(230, 161, 0, 0.3);
+  border-radius: 12px;
+  padding: 13px 16px;
+  color: #ffffff;
+  font-size: 1rem;
+  font-family: var(--font-body);
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.form-input:focus,
+.form-select:focus {
+  border-color: var(--accent-gold);
+  box-shadow: 0 0 0 3px rgba(230, 161, 0, 0.25);
+  background: rgba(18, 9, 30, 0.95);
+}
+
+.form-select option {
+  background: #1a0e2e;
+  color: #ffffff;
+  padding: 10px;
+}
+
+/* Night Pill Chips */
+.night-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 8px;
+}
+
+@media (max-width: 640px) {
+  .night-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.night-chip {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  padding: 10px 12px;
+  border-radius: 10px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 0.88rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.night-chip:hover {
+  background: rgba(230, 161, 0, 0.1);
+  border-color: rgba(230, 161, 0, 0.4);
+}
+
+.night-chip.selected {
+  background: linear-gradient(135deg, rgba(255, 153, 51, 0.25), rgba(217, 56, 30, 0.3));
+  border-color: var(--accent-gold);
+  color: var(--accent-gold-light);
+  font-weight: 700;
+  box-shadow: 0 0 10px rgba(230, 161, 0, 0.2);
+}
+
+/* Badges & Pills */
+.pill-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: rgba(230, 161, 0, 0.12);
+  border: 1px solid rgba(230, 161, 0, 0.35);
+  color: var(--accent-gold-light);
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* Floating Animations */
+@keyframes floatSlow {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(2deg);
+  }
+}
+
+.animate-float {
+  animation: floatSlow 4s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(255, 153, 51, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(255, 153, 51, 0.6);
+  }
+}
+
+.glow-pulse {
+  animation: pulseGlow 3s infinite;
+}
+
+/* Gujarati Font Headers */
+.font-festive {
+  font-family: var(--font-festive);
+}
+
+.font-heading {
+  font-family: var(--font-heading);
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(7, 3, 12, 0.8);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+}
+
+/* Alert Boxes */
+.alert-error {
+  background: rgba(217, 56, 30, 0.15);
+  border: 1px solid #d9381e;
+  color: #ff8a80;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.alert-success {
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid #10b981;
+  color: #6ee7b7;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Responsive containers */
+.container-custom {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+@media (max-width: 768px) {
+  .container-custom {
+    padding: 0 16px;
+  }
+  .step-line {
+    width: 25px;
+  }
+}

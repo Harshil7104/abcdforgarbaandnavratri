@@ -1,0 +1,50 @@
+{
+  "name": "find-my-garba-partner-backend",
+  "version": "1.0.0",
+  "description": "Backend API for Find My Garba Partner - local event matching platform for Gujarat",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "concurrently -n \"BACKEND,CLIENT\" -c \"magenta,cyan\" \"npm run dev:backend\" \"npm run dev:client\"",
+    "dev:backend": "nodemon server.js",
+    "dev:client": "npm --prefix client run dev",
+    "build": "npm --prefix client install && npm --prefix client run build",
+    "seed": "node scripts/seedUsers.js",
+    "make-admin": "node scripts/create-admin.js",
+    "client": "npm --prefix client run dev",
+    "client:build": "npm --prefix client run build",
+    "tunnel": "npx untun@latest tunnel http://localhost:5173",
+    "tunnel:cf": "npx cloudflared tunnel --url http://localhost:5173"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "keywords": [
+    "garba",
+    "navratri",
+    "event-matching",
+    "gujarat",
+    "express",
+    "mongodb"
+  ],
+  "author": "Find My Garba Partner Team",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-mongo-sanitize": "^2.2.0",
+    "express-rate-limit": "^7.3.1",
+    "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.5.1",
+    "node-cron": "^4.6.0",
+    "socket.io": "^4.8.3"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.5",
+    "nodemon": "^3.1.4"
+  }
+}
