@@ -27,6 +27,8 @@ import {
 } from 'lucide-react';
 import { api } from '../services/api';
 import { GUJARAT_CITIES } from '../data/gujaratLocations';
+import { AdminMatchTable } from './AdminMatchTable';
+import { generateAdminMatchWhatsAppLink, openWhatsApp } from '../utils/whatsapp';
 
 export const AdminDashboard = ({ currentUser, onBackToSite, onLogout }) => {
   // State
@@ -530,189 +532,13 @@ export const AdminDashboard = ({ currentUser, onBackToSite, onLogout }) => {
         </div>
 
         {/* Table View */}
-        {loading ? (
-          <div style={{ textAlign: 'center', padding: '60px 0', color: 'var(--text-muted)' }}>
-            <Loader2 size={32} className="animate-spin" style={{ margin: '0 auto 12px auto' }} />
-            <div>Loading match monitor records...</div>
-          </div>
-        ) : matches.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '50px 0', color: 'var(--text-muted)' }}>
-            <UserX size={40} style={{ margin: '0 auto 10px auto', opacity: 0.5 }} />
-            <div style={{ fontSize: '1rem', fontWeight: 600 }}>No match records found matching current filters.</div>
-            <div style={{ fontSize: '0.8rem', marginTop: '4px' }}>Try adjusting city or status filters above.</div>
-          </div>
-        ) : (
-          <div style={{ overflowX: 'auto' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.83rem', textAlign: 'left' }}>
-              <thead>
-                <tr style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.15)', color: '#ffd54f' }}>
-                  <th style={{ padding: '10px 12px' }}>User A</th>
-                  <th style={{ padding: '10px 12px' }}>User B / Partner</th>
-                  <th style={{ padding: '10px 12px' }}>City / Area</th>
-                  <th style={{ padding: '10px 12px' }}>Garba Style</th>
-                  <th style={{ padding: '10px 12px' }}>Common Nights</th>
-                  <th style={{ padding: '10px 12px' }}>Compatibility</th>
-                  <th style={{ padding: '10px 12px', textAlign: 'center' }}>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {matches.map((m, idx) => (
-                  <tr
-                    key={m.matchId || idx}
-                    style={{
-                      borderBottom: '1px solid rgba(255, 255, 255, 0.06)',
-                      background: idx % 2 === 0 ? 'rgba(255, 255, 255, 0.015)' : 'transparent',
-                    }}
-                  >
-                    {/* User A */}
-                    <td style={{ padding: '12px' }}>
-                      <div style={{ fontWeight: 700, color: '#ffffff' }}>{m.userA?.fullName}</div>
-                      <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)' }}>
-                        +91 {m.userA?.phone} ({m.userA?.gender})
-                      </div>
-                      {m.userA?.socialProfile && (
-                        <div style={{ fontSize: '0.7rem', color: '#ff9933' }}>{m.userA.socialProfile}</div>
-                      )}
-                    </td>
-
-                    {/* User B / Partner */}
-                    <td style={{ padding: '12px' }}>
-                      {m.userB ? (
-                        <div>
-                          <div style={{ fontWeight: 700, color: '#6ee7b7' }}>{m.userB.fullName}</div>
-                          <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)' }}>
-                            +91 {m.userB.phone} ({m.userB.gender})
-                          </div>
-                          {m.userB.socialProfile && (
-                            <div style={{ fontSize: '0.7rem', color: '#ff9933' }}>{m.userB.socialProfile}</div>
-                          )}
-                        </div>
-                      ) : (
-                        <span style={{ color: '#ffd54f', fontStyle: 'italic', fontSize: '0.78rem' }}>
-                          ⏳ Awaiting Partner
-                        </span>
-                      )}
-                    </td>
-
-                    {/* City / Area */}
-                    <td style={{ padding: '12px' }}>
-                      <div style={{ fontWeight: 600 }}>{m.city}</div>
-                      <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>{m.area}</div>
-                    </td>
-
-                    {/* Garba Style */}
-                    <td style={{ padding: '12px' }}>
-                      <span
-                        style={{
-                          background: 'rgba(230, 161, 0, 0.15)',
-                          color: '#ffd54f',
-                          padding: '2px 8px',
-                          borderRadius: '6px',
-                          fontSize: '0.74rem',
-                          fontWeight: 700,
-                        }}
-                      >
-                        {m.overlappingStyle}
-                      </span>
-                    </td>
-
-                    {/* Common Nights */}
-                    <td style={{ padding: '12px' }}>
-                      <div style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.85)', maxWidth: '140px' }}>
-                        {Array.isArray(m.commonNights) ? m.commonNights.slice(0, 2).join(', ') : m.commonNights}
-                        {Array.isArray(m.commonNights) && m.commonNights.length > 2 && ` (+${m.commonNights.length - 2})`}
-                      </div>
-                    </td>
-
-                    {/* Compatibility Score / Status */}
-                    <td style={{ padding: '12px' }}>
-                      {m.status === 'Matched' ? (
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                          <span
-                            style={{
-                              background: 'rgba(16, 185, 129, 0.2)',
-                              color: '#6ee7b7',
-                              padding: '2px 8px',
-                              borderRadius: '6px',
-                              fontSize: '0.75rem',
-                              fontWeight: 800,
-                            }}
-                          >
-                            {m.matchScore}
-                          </span>
-                        </div>
-                      ) : (
-                        <span
-                          style={{
-                            background: 'rgba(255, 153, 51, 0.15)',
-                            color: '#ffd54f',
-                            padding: '2px 8px',
-                            borderRadius: '6px',
-                            fontSize: '0.72rem',
-                          }}
-                        >
-                          Pending Solo
-                        </span>
-                      )}
-                    </td>
-
-                    {/* Actions */}
-                    <td style={{ padding: '12px', textAlign: 'center' }}>
-                      <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-                        {/* Inspect Pair */}
-                        <button
-                          onClick={() => setInspectedPair(m)}
-                          title="Inspect Pair Details"
-                          style={{
-                            background: 'rgba(255, 255, 255, 0.08)',
-                            border: '1px solid rgba(255, 255, 255, 0.2)',
-                            color: '#ffffff',
-                            padding: '6px 10px',
-                            borderRadius: '6px',
-                            fontSize: '0.74rem',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '4px',
-                          }}
-                        >
-                          <Eye size={13} />
-                          <span>Inspect</span>
-                        </button>
-
-                        {/* Unmatch Action if Matched */}
-                        {m.status === 'Matched' && (
-                          <button
-                            onClick={() =>
-                              handleManualUnmatch(m.userA?._id, m.userB?._id, `${m.userA?.fullName} & ${m.userB?.fullName}`)
-                            }
-                            title="Break Match (Reset to Pending)"
-                            style={{
-                              background: 'rgba(217, 56, 30, 0.15)',
-                              border: '1px solid #d9381e',
-                              color: '#ff8a80',
-                              padding: '6px 10px',
-                              borderRadius: '6px',
-                              fontSize: '0.74rem',
-                              cursor: 'pointer',
-                              display: 'flex',
-                              alignItems: 'center',
-                              gap: '4px',
-                            }}
-                            disabled={actionLoading}
-                          >
-                            <Unlink size={13} />
-                            <span>Unmatch</span>
-                          </button>
-                        )}
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
+        <AdminMatchTable
+          matches={matches}
+          loading={loading}
+          actionLoading={actionLoading}
+          onInspectPair={setInspectedPair}
+          onManualUnmatch={handleManualUnmatch}
+        />
       </div>
 
       {/* ========================================================= */}
@@ -824,7 +650,7 @@ export const AdminDashboard = ({ currentUser, onBackToSite, onLogout }) => {
                     <strong>Group Preference:</strong> {inspectedPair.userA?.groupSize || 'Solo'}
                   </div>
 
-                  <div>
+                    <div>
                     <strong>Available Nights:</strong>
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px', marginTop: '4px' }}>
                       {(inspectedPair.userA?.nightAvailability || []).map((n) => (
@@ -834,6 +660,40 @@ export const AdminDashboard = ({ currentUser, onBackToSite, onLogout }) => {
                       ))}
                     </div>
                   </div>
+
+                  {/* 1-Click WhatsApp Notify User A */}
+                  {inspectedPair.userA?.phone && (
+                    <button
+                      onClick={() => {
+                        const url = generateAdminMatchWhatsAppLink({
+                          recipientPhone: inspectedPair.userA.phone,
+                          recipientName: inspectedPair.userA.fullName,
+                          partnerName: inspectedPair.userB?.fullName || 'your matched partner',
+                          city: inspectedPair.city || inspectedPair.userA.city,
+                        });
+                        openWhatsApp(url);
+                      }}
+                      style={{
+                        marginTop: '10px',
+                        width: '100%',
+                        padding: '8px 12px',
+                        background: 'linear-gradient(135deg, #25D366, #128C7E)',
+                        border: 'none',
+                        borderRadius: '8px',
+                        color: '#ffffff',
+                        fontWeight: 700,
+                        fontSize: '0.78rem',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '6px',
+                        boxShadow: '0 2px 10px rgba(37, 211, 102, 0.3)',
+                      }}
+                    >
+                      <span>💬 Notify {inspectedPair.userA.fullName.split(' ')[0]} via WhatsApp</span>
+                    </button>
+                  )}
                 </div>
               </div>
 
@@ -895,6 +755,40 @@ export const AdminDashboard = ({ currentUser, onBackToSite, onLogout }) => {
                         ))}
                       </div>
                     </div>
+
+                    {/* 1-Click WhatsApp Notify User B */}
+                    {inspectedPair.userB?.phone && (
+                      <button
+                        onClick={() => {
+                          const url = generateAdminMatchWhatsAppLink({
+                            recipientPhone: inspectedPair.userB.phone,
+                            recipientName: inspectedPair.userB.fullName,
+                            partnerName: inspectedPair.userA?.fullName || 'your matched partner',
+                            city: inspectedPair.city || inspectedPair.userB.city,
+                          });
+                          openWhatsApp(url);
+                        }}
+                        style={{
+                          marginTop: '10px',
+                          width: '100%',
+                          padding: '8px 12px',
+                          background: 'linear-gradient(135deg, #25D366, #128C7E)',
+                          border: 'none',
+                          borderRadius: '8px',
+                          color: '#ffffff',
+                          fontWeight: 700,
+                          fontSize: '0.78rem',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          gap: '6px',
+                          boxShadow: '0 2px 10px rgba(37, 211, 102, 0.3)',
+                        }}
+                      >
+                        <span>💬 Notify {inspectedPair.userB.fullName.split(' ')[0]} via WhatsApp</span>
+                      </button>
+                    )}
                   </div>
                 </div>
               )}

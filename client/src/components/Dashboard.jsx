@@ -143,6 +143,7 @@ export const Dashboard = ({ user, onOpenChat, onOpenProfile, onOpenAdmin, onOpen
                 <MatchedUserCard
                   key={partner._id || partner.id || partner}
                   partner={partner}
+                  currentUser={user}
                   onOpenChat={onOpenChat}
                 />
               ))}

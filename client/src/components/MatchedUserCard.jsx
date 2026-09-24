@@ -1,13 +1,25 @@
 import React from 'react';
 import { MessageSquare, MapPin, Sparkles, Users, ShieldCheck } from 'lucide-react';
+import { generateUserMatchWhatsAppLink, openWhatsApp } from '../utils/whatsapp';
 
-export const MatchedUserCard = ({ partner, onOpenChat }) => {
+export const MatchedUserCard = ({ partner, currentUser, onOpenChat }) => {
   // Extract first name + initial for privacy
   const getMaskedName = (fullName) => {
     if (!fullName) return 'Garba Enthusiast';
     const parts = fullName.trim().split(' ');
     if (parts.length === 1) return parts[0];
     return `${parts[0]} ${parts[1].charAt(0)}.`;
+  };
+
+  const handleWhatsAppClick = () => {
+    const url = generateUserMatchWhatsAppLink({
+      partnerPhone: partner.phone,
+      partnerName: partner.fullName || 'Garba Partner',
+      myName: currentUser?.fullName || '',
+      city: partner.city || currentUser?.city || 'Gujarat',
+      garbaStyle: partner.garbaStyle || currentUser?.garbaStyle || 'Dodhiya',
+    });
+    openWhatsApp(url);
   };
 
   return (
@@ -85,15 +97,43 @@ export const MatchedUserCard = ({ partner, onOpenChat }) => {
         </div>
       </div>
 
-      {/* Action Button */}
-      <button
-        onClick={() => onOpenChat(partner)}
-        className="btn-festive-gold"
-        style={{ width: '100%', padding: '12px', fontSize: '0.95rem' }}
-      >
-        <MessageSquare size={18} />
-        <span>Chat Now (Masked)</span>
-      </button>
+      {/* Action Buttons: In-App Chat + 1-Click WhatsApp Direct Connect */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '10px' }}>
+        <button
+          onClick={() => onOpenChat(partner)}
+          className="btn-festive-gold"
+          style={{ width: '100%', padding: '12px', fontSize: '0.92rem' }}
+        >
+          <MessageSquare size={17} />
+          <span>Chat In-App (Masked)</span>
+        </button>
+
+        {partner.phone && (
+          <button
+            onClick={handleWhatsAppClick}
+            style={{
+              width: '100%',
+              padding: '11px',
+              borderRadius: '9999px',
+              border: 'none',
+              background: 'linear-gradient(135deg, #25D366, #128C7E)',
+              color: '#ffffff',
+              fontWeight: 800,
+              fontSize: '0.92rem',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '8px',
+              boxShadow: '0 4px 15px rgba(37, 211, 102, 0.35)',
+              transition: 'all 0.2s ease',
+            }}
+          >
+            <span style={{ fontSize: '1.15rem' }}>💬</span>
+            <span>Connect on WhatsApp</span>
+          </button>
+        )}
+      </div>
     </div>
   );
 };
